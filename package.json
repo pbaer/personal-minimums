@@ -2,7 +2,7 @@
     "name": "personal-minimums",
     "version": "1.0.0",
     "description": "Checks weather conditions against personal minimums",
-    "main": "src/index.js",
+    "main": "src/index.mjs",
     "scripts": {
       "test": "echo \"No tests, should probably add some\""
     },
