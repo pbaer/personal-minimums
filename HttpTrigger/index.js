@@ -1,4 +1,8 @@
-import { test } from '../src/index.js';
+//import { test } from '../src/index.js';
+
+const test = () => {
+    return 'xxxx';
+};
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
