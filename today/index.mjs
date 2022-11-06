@@ -1,10 +1,6 @@
-//import { test } from '../src/index.js';
+import { test } from '../src/index.mjs';
 
-const test = () => {
-    return 'xxxx';
-};
-
-module.exports = async function (context, req) {
+export default async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
     const name = (req.query.name || (req.body && req.body.name));
