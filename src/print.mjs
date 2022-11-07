@@ -14,7 +14,7 @@ const charForCode = (code) => {
         return '!'//.yellow;//'\u{1F7E8}';
     }
     if (code === Code.Green) {
-        return '✓'//.green;//'\u{1F7E9}';
+        return '.'//.green;//'\u{1F7E9}';
     }
     if (code === Code.None) {
         return '/'//.gray;
@@ -34,6 +34,12 @@ const isDaylightHour = (hour) => {
 };
 
 export const printToday = async () => {
+    const promises = [];
+    for (const airport of airports.filter(x => x.taf)) {
+        promises.push(addForecastByHour(airport));
+    }
+    await Promise.all(promises);
+
     let output = '';
     const addLine = (line) => {
         output += `${line}\n`;
@@ -43,7 +49,6 @@ export const printToday = async () => {
     let end = new Date(Date.now() - oneYearInMs);
 
     for (const airport of airports.filter(x => x.taf)) {
-        await addForecastByHour(airport);
         if (airport.forecastStart < start) {
             start = airport.forecastStart;
         }
