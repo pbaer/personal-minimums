@@ -10,7 +10,6 @@
     "license": "MIT",
     "dependencies": {
         "colors": "^1.4.0",
-        "date-fns": "^2.29.3",
         "dotenv": "^16.0.3",
         "metar-taf-parser": "^6.1.4",
         "node-fetch": "^3.2.10",

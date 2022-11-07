@@ -1,11 +1,10 @@
 import pkg from 'colors';
 const { colors } = pkg;
-import { eachHourOfInterval } from 'date-fns';
 import { getSunrise, getSunset } from 'sunrise-sunset-js';
 import { airports } from './airports.mjs';
 import { Code } from './minimums.mjs';
 import { addForecastByHour } from './taf.mjs';
-import { oneHourInMs, oneDayInMs, oneYearInMs, toPaddedString } from './util.mjs';
+import { oneHourInMs, oneDayInMs, oneYearInMs, toPaddedString, eachHourOfInterval } from './util.mjs';
 
 const charForCode = (code) => {
     if (code === Code.Red) {
@@ -64,7 +63,7 @@ export const printToday = async () => {
 
     const hours = eachHourOfInterval({
         start: start,
-        end: end - oneHourInMs
+        end: new Date(end.getTime() - oneHourInMs)
     });
 
     let separatorLine = '+------+';

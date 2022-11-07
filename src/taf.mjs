@@ -1,9 +1,8 @@
-import { eachHourOfInterval } from 'date-fns'
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+//import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { parseTAFAsForecast, getCompositeForecastForDate } from 'metar-taf-parser';
 import fetch from 'node-fetch';
 import { applyMinimums } from './minimums.mjs';
-import { oneHourInMs } from './util.mjs';
+import { oneHourInMs, eachHourOfInterval } from './util.mjs';
 
 const isTafCacheCurrent = (taf) => {
     if (Date.now() - taf.downloaded > oneHourInMs/2) {
@@ -14,6 +13,7 @@ const isTafCacheCurrent = (taf) => {
 
 export const addForecastByHour = async (airport) => {
     let taf;
+    /*
     const cacheFilePath = `./cache/${airport.id}.json`;
     if (existsSync(cacheFilePath)) {
         taf = JSON.parse(readFileSync(cacheFilePath, 'utf8'));
@@ -21,15 +21,18 @@ export const addForecastByHour = async (airport) => {
             taf = undefined;
         }
     } 
+    */
     if (!taf) {
         const response = await fetch(`https://api.metar-taf.com/taf?api_key=${process.env.METAR_TAF_API_KEY}&v=2.3&locale=en-US&id=${airport.id}`);
         const body = await response.text();
+        taf = JSON.parse(body).taf;
+        taf.downloaded = Date.now();
+        /*
         if (!existsSync('./cache')) {
             mkdirSync('./cache');
         }
-        taf = JSON.parse(body).taf;
-        taf.downloaded = Date.now();
         writeFileSync(`./cache/${airport.id}.json`, JSON.stringify(taf, undefined, ' '));
+        */
     }
 
     taf.starttime = new Date(taf.starttime * 1000 /* convert from UNIX time */);
