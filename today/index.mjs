@@ -1,18 +1,17 @@
-import { test } from '../src/index.mjs';
+import { printToday } from '../src/index.mjs';
 
-export default async function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request.');
+export default async function (context, _req) {
     try {
-        const name = (req.query.name || (req.body && req.body.name));
-        const responseMessage = name
-            ? "Hello, " + name + ". This HTTP triggered function executed successfully!!!!" + await test()
-            : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response!!!" + await test();
-    
+        // Note, parameters could be taken from req.query.someParamName or req.body?.someParamName
         context.res = {
-            // status: 200, /* Defaults to 200 */
-            body: responseMessage
+            status: 200,
+            body: await printToday()
         };    
     } catch (err) {
+        context.res = {
+            status: 500,
+            body: 'Error'
+        };
         context.log(`Error: ${err}`);
     }
 }

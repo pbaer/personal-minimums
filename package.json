@@ -9,10 +9,9 @@
     "author": "Peter Baer",
     "license": "MIT",
     "dependencies": {
-        "@azure/identity": "^3.0.0",
-        "@azure/keyvault-secrets": "^4.6.0",
         "colors": "^1.4.0",
         "date-fns": "^2.29.3",
+        "dotenv": "^16.0.3",
         "metar-taf-parser": "^6.1.4",
         "node-fetch": "^3.2.10",
         "sunrise-sunset-js": "^2.2.1"
