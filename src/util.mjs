@@ -19,3 +19,7 @@ export const eachHourOfInterval = (config) => {
     }
     return result;
 };
+
+export const localDate = (date, utcOffset) => {
+    return utcOffset ? new Date(date.getTime() + utcOffset * oneHourInMs) : date;
+}

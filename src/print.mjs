@@ -4,7 +4,7 @@ import { getSunrise, getSunset } from 'sunrise-sunset-js';
 import { airports } from './airports.mjs';
 import { Code } from './minimums.mjs';
 import { addForecastByHour } from './taf.mjs';
-import { oneHourInMs, oneDayInMs, oneYearInMs, toPaddedString, eachHourOfInterval } from './util.mjs';
+import { oneHourInMs, oneDayInMs, oneYearInMs, toPaddedString, eachHourOfInterval, localDate } from './util.mjs';
 
 const charForCode = (code) => {
     if (code === Code.Red) {
@@ -33,7 +33,7 @@ const isDaylightHour = (hour) => {
     return sunrise.getTime() < hour.getTime() && hour.getTime() < sunset.getTime();
 };
 
-export const printToday = async () => {
+export const printToday = async (utcOffset) => {
     const promises = [];
     for (const airport of airports.filter(x => x.taf)) {
         promises.push(addForecastByHour(airport));
@@ -83,7 +83,7 @@ export const printToday = async () => {
     for (const hour of hours) {
         headerLines[0] += '------+';
         headerLines[1] += ` ${toPaddedString(hour.getUTCDate(), 2)}${toPaddedString(hour.getUTCHours(), 2)} |`;
-        headerLines[2] += ` ${toPaddedString(hour.getDate(), 2)}${toPaddedString(hour.getHours(), 2)} |`;
+        headerLines[2] += ` ${toPaddedString(localDate(hour, utcOffset).getDate(), 2)}${toPaddedString(localDate(hour, utcOffset).getHours(), 2)} |`;
         headerLines[3] += `  ${isDaylightHour(hour) ? '**' : '  '}  |`;
         headerLines[4] += 'WGXVWC|';
     }

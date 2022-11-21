@@ -49,7 +49,7 @@ const getCrosswindMinimumsCode = (wind, airport) => {
     }
     const windKts = wind.gust ? wind.gust : wind.speed;
     const calculateCrosswind = (windKts, windDegrees, runwaysTrue) => {
-        if (!windDegrees) {
+        if (windDegrees === undefined) {
             return windKts;
         }
         return Math.round(Math.sin(Math.PI * Math.abs(windDegrees - runwaysTrue)/180) * windKts);
