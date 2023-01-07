@@ -136,5 +136,10 @@ export const printToday = async (utcOffset) => {
         addLine(separatorLine);
     }
 
+    addLine('');
+    for (const airport of airports.filter(x => x.local)) {
+        addLine(airport.forecastRaw);
+    }
+
     return output;
 };
